@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main extends CI_Controller {
+class Home extends CI_Controller {
 
 	public function __construct(){
         parent::__construct();
@@ -9,15 +9,9 @@ class Main extends CI_Controller {
         $this->load->helper('url');
     }
 
-	public function error(){
-		$this->load->view('errors/html/error_404');
-	}
 
 	public function index(){
-		$this->load->view('main/landing');
+		$this->load->view('home/home');
 	}
 
-	public function download(){
-		$this->load->view('main/download');
-	}
 }

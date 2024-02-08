@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php $this->load->view("static/head") ?>
+<?php $this->load->view("main/static/head") ?>
 
 </head>
 <body>
@@ -16,7 +16,8 @@
             <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
                 <div class="card card-body text-center p-4 p-sm-5">
                     <h1 class="mb-2">Sign in</h1>
-                    <form action="<?= site_url('login') ?>" method="post" class="mt-sm-4">
+                    <p class="mb-0">Don't have an account?<a href="<?= site_url('sign-up') ?>"> Click here to sign up</a></p>
+                    <form action="<?= site_url('sign-in') ?>" method="post" class="mt-sm-4">
                         <div class="mb-3 input-group-lg">
                             <input type="email" name="email" class="form-control" placeholder="Enter email">
                         </div>
@@ -33,11 +34,16 @@
                                 <input type="checkbox" class="form-check-input" id="rememberCheck">
                                 <label class="form-check-label" for="rememberCheck">Remember me?</label>
                             </div>
-                            <a href="<?= site_url('auth/forgot_password') ?>">Forgot password?</a>
+                            <a href="<?= site_url('') ?>">Forgot password?</a>
                         </div>
                         <div class="d-grid">
                             <button type="submit" name="login" class="btn btn-lg btn-primary">Login</button>
                         </div>
+                        <?php if (isset($error)): ?>
+                                <p style="color: red;display: flex;justify-content: center;" class="mt-4">
+                                    <?= $error ?>
+                                </p>
+                            <?php endif; ?>
                     </form>
                     <p class="mb-0 mt-3">©2023 <a target="_blank" href="https://www.webestica.com/">Webestica.</a> All rights reserved</p>
                 </div>

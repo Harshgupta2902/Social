@@ -20,13 +20,13 @@
           <a class="nav-link" href="blog.html">Blog</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="settings.html">Security</a>
+          <a class="nav-link" href="settings.html">Security</a> 
         </li>
       </ul>
     </div>
 
     <div class="ms-3 ms-lg-auto">
-      <a class="btn btn-dark" href="<?= base_url('login') ?>" target="blank"> Login </a>
+      <a class="btn btn-dark" href="<?= base_url('sign-in') ?>" target="blank"> Login </a>
     </div>
     </div>
   </nav>

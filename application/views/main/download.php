@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<?php $this->load->view("static/head") ?>
+	<?php $this->load->view("main/static/head") ?>
 </head>
 
 <body>
@@ -106,7 +106,7 @@
 
 </main>
 
-<?php $this->load->view("static/download") ?>
+<?php $this->load->view("main/static/download") ?>
 
 
 

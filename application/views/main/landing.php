@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-	<?php $this->load->view("static/head") ?>
+	<?php $this->load->view("main/static/head") ?>
 </head>
 
 <body>
 
-<?php $this->load->view("static/landing_navbar") ?>
+<?php $this->load->view("main/static/landing_navbar") ?>
 
 
   <main>
@@ -285,8 +285,8 @@
   </section>
 </main>
 
-<?php $this->load->view("static/footer") ?>
-<?php $this->load->view("static/download") ?>
+<?php $this->load->view("main/static/footer") ?>
+<?php $this->load->view("main/static/download") ?>
 
 
 
