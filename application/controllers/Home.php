@@ -7,11 +7,24 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
+		$this->load->library('session');
+		$this->load->model('HomeModel');
+
     }
 
 
 	public function index(){
-		$this->load->view('home/home');
+        if ($this->session->userdata('logged_in') == true || !empty($this->session->userdata('name'))) {
+
+            $data['friends'] = $this->HomeModel->getFriend();
+            print_r($data);
+
+            $this->load->view('home/home', $data);
+        } else {
+            redirect('sign-in');
+        }		
 	}
+
+
 
 }

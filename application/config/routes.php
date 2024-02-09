@@ -57,7 +57,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['download'] = 'Main/download';
 $route['sign-in'] = 'Auth/sign_in';
 $route['sign-up'] = 'Auth/sign_up';
-// $route['reset-password'] = 'Auth/resetPassword';
+$route['logout'] = 'Auth/logout';
+
 
 
 $route['home'] = 'Home/index';

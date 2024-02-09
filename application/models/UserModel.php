@@ -15,8 +15,8 @@ class UserModel extends CI_Model
 
     public function insert_user($data)
     {
-        // $this->db->insert('users', $data);
-        // echo "success";
+        $this->db->insert('users', $data);
+        echo "success";
         print_r($data);
     }
 

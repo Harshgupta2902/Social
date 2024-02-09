@@ -249,7 +249,7 @@
 									<img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt="avatar">
 								</div>
 								<div>
-									<a class="h6 stretched-link" href="#">Lori Ferguson</a>
+									<a class="h6 stretched-link" href="#"><?= $this->session->userdata('name') ?> </a>
 									<p class="small m-0">Web Developer</p>
 								</div>
 							</div>
@@ -268,7 +268,7 @@
 							</a> 
 						</li>
 						<li class="dropdown-divider"></li>
-						<li><a class="dropdown-item bg-danger-soft-hover" href="sign-in-advance.html"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+						<li><a class="dropdown-item bg-danger-soft-hover" href="<?= site_url('logout') ?>"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
 						<li> <hr class="dropdown-divider"></li>
 						<!-- Dark mode options START -->
 						<li>

@@ -58,54 +58,64 @@
                             </div>
                             <!-- Date of birth -->
                             <label for="">Date Of Birth</label>
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col-sm-4">
-                                    <select required name="date" class="form-control  custom-select">
-                                        <option selected>Date</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                    <select required name="date" class="form-control custom-select">
+                                        <?php
+                                        for ($i = 1; $i <= 31; $i++) {
+                                            echo "<option value=\"$i\">$i</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <select required name="month" class="form-control  custom-select">
-                                        <option selected>Month</option>
-                                        <option value="1">Jan</option>
-                                        <option value="2">Feb</option>
-                                        <option value="3">Three</option>
+                                    <select required name="month" class="form-control custom-select">
+                                        <?php
+                                        $months = [
+                                            1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun",
+                                            7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec"
+                                        ];
+                                        foreach ($months as $key => $month) {
+                                            echo "<option value=\"$key\">$month</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <select required name="year" class="form-control  custom-select">
-                                        <option selected>Year</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select required name="year" class="form-control custom-select">
+                                        <?php
+                                        $currentYear = date("Y");
+                                        for ($i = $currentYear; $i >= 1900; $i--) {
+                                            echo "<option value=\"$i\">$i</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
+
                             <!-- Gender -->
                             <label class="mt-3" for="">Gender</label>
                             <div class="row mb-3">
                                 <div class="col-sm-4">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input required type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                        <input required type="radio" id="maleRadio" name="gender" value="male" class="custom-control-input">
+                                        <label class="custom-control-label" for="maleRadio">Male</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input required type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1">Female</label>
+                                        <input required type="radio" id="femaleRadio" name="gender" value="female" class="custom-control-input">
+                                        <label class="custom-control-label" for="femaleRadio">Female</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input required type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1">Other</label>
+                                        <input required type="radio" id="otherRadio" name="gender" value="other" class="custom-control-input">
+                                        <label class="custom-control-label" for="otherRadio">Other</label>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Button -->
                             <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Sign me up</button></div>
                             <?php if (isset($error)): ?>

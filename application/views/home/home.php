@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	
-<!-- Mirrored from social.webestica.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Feb 2024 11:03:10 GMT -->
 <head>
     <?php $this->load->view('home/static/head') ?>
 </head>
@@ -1083,7 +1082,7 @@
 					<a href="#!"> <img src="assets/images/post/3by2/03.jpg" alt=""> </a>
 					<!-- Card body START -->
 					<div class="card-body position-relative bg-light">
-						<a href="#!" class="small stretched-link">https://blogzine.webestica.com</a>
+					<a href="#!" class="small stretched-link">https://blogzine.webestica.com</a>
 						<h6 class="mb-0 mt-1">Blogzine - Blog and Magazine Bootstrap 5 Theme</h6>
 						<p class="mb-0 small">Bootstrap based News, Magazine and Blog Theme</p>
 					</div>

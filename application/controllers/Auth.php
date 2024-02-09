@@ -10,7 +10,8 @@ class Auth extends CI_Controller
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->model('UserModel');
-        $this->load->library('form_validation'); // Load form validation library
+        $this->load->library('form_validation');
+		$this->load->library('session');
 
 	}
 
@@ -21,8 +22,11 @@ class Auth extends CI_Controller
 			$password = $this->input->post('password');
 
 			$user = $this->UserModel->authenticate($email, $password);
-
+			$name = $user['first_name'] . ' ' . $user['surname'];
 			if ($user) {
+				$this->session->set_userdata('logged_in', true);
+        		$this->session->set_userdata('name', $name);
+        		$this->session->set_userdata('userid', $user['id']);
 				redirect('home');
 			} else {
 				$data['error'] = 'Invalid email & password';
@@ -36,39 +40,50 @@ class Auth extends CI_Controller
 
 	public function sign_up()
 	{
-		
-        $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
-        $this->form_validation->set_rules('surname', 'Surname', 'trim|required');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
-        $this->form_validation->set_rules('date', 'Date', 'required');
-        $this->form_validation->set_rules('month', 'Month', 'required');
-        $this->form_validation->set_rules('year', 'Year', 'required');
-        $this->form_validation->set_rules('gender', 'Gender', 'required');
-	
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('auth/sign-up');
-		} else {
-			if ($this->UserModel->is_email_exist($email)) {
+		if ($this->input->post('email') &&  $this->input->post('password')) {
+			$password = $this->input->post('password');
+			$data = array(
+				'first_name' => $this->input->post('firstname'),
+				'surname' => $this->input->post('surname'),
+				'email' => $this->input->post('email'),
+				'password' => $password,
+				'cpassword' => md5($password),
+				'date_of_birth' => $this->input->post('date') . '-' . $this->input->post('month') . '-' . $this->input->post('year'),
+				'gender' => $this->input->post('gender')
+			);
+
+			// Calculate age
+			$dob = new DateTime($data['date_of_birth']);
+			$now = new DateTime();
+			$age = $now->diff($dob)->y;
+
+			if ($age < 13) {
+				$data['error'] = 'You must be at least 13 years old to sign up.';
+				$this->load->view('auth/sign-up', $data);
+			} elseif ($this->UserModel->is_email_exist($data['email'])) {
 				$data['error'] = 'Email address already exists';
 				$this->load->view('auth/sign-up', $data);
 			} else {
-				$data = array(
-					'first_name' => $this->input->post('firstname'),
-					'surname' => $this->input->post('surname'),
-					'email' => $this->input->post('email'),
-					'password' => $password,	
-					'cpassword' => md5($password),
-					'date_of_birth' => $this->input->post('year') . '-' . $this->input->post('month') . '-' . $this->input->post('date'),
-					'gender' => $this->input->post('gender')
-				);
-	
 				$this->UserModel->insert_user($data);
-	
 				redirect('sign-in');
 			}
+		} else {
+			$this->load->view('auth/sign-up');
 		}
 	}
+
+	public function logout()
+	{
+		$userdata_keys = $this->session->all_userdata();
+
+		// Unset each userdata key
+		foreach ($userdata_keys as $key => $value) {
+			$this->session->unset_userdata($key);
+		}
+		$this->session->sess_destroy();
+		redirect('sign-in');
+	}
+
 	// public function register()
 	// {
 	// 	$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
