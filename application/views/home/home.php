@@ -2,11 +2,11 @@
 <html lang="en">
 	
 <head>
-    <?php $this->load->view('home/static/head') ?>
+    <?php $this->load->view('static/head') ?>
 </head>
 <body>
 
-<?php $this->load->view('home/static/header') ?>
+<?php $this->load->view('static/header') ?>
 
 
 <!-- **************** MAIN CONTENT START **************** -->
@@ -1715,7 +1715,7 @@ JS libraries, plugins and custom scripts -->
 <script src="assets/js/zuck-stories.js"></script>
 
 <!-- Theme Functions -->
-<script src="assets/js/functions.js"></script>
+<!-- <script src="assets/js/functions.js"></script> -->
 
 
 </body>

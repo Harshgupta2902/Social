@@ -30,7 +30,26 @@ class FollowModel extends CI_Model
         $query = $this->db->get('follow');
         return $query->num_rows() > 0;
     }
+
+    public function getFollowersCount($user_id){
+        $this->db->where('user_id', $user_id);
+        $this->db->where('status', 1);
+        $count = $this->db->count_all_results('follow');
+        return $count;
+    }
+
+
+    public function getFollowersList($user_id){
+        $this->db->select('users.*');
     
+        $this->db->from('users');
+        $this->db->join('follow', 'users.id = follow.follower_id');
+    
+        $this->db->where('follow.user_id', $user_id);
+        $this->db->where('follow.status', 1);
+    
+        return $this->db->get()->result_array();
+    }
 
 
 

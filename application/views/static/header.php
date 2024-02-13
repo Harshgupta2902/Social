@@ -3,7 +3,7 @@
 	<nav class="navbar navbar-expand-lg">
 		<div class="container">
 			<!-- Logo START -->
-			<a class="navbar-brand" href="index-2.html">
+			<a class="navbar-brand" href="<?php echo site_url('home') ?>">
 				<img class="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo">
 				<img class="dark-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo">
 			</a>
@@ -237,8 +237,8 @@
 				<!-- Notification dropdown END -->
 
 				<li class="nav-item ms-2 dropdown">
-					<a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-						<img class="avatar-img rounded-2" src="assets/images/avatar/07.jpg" alt="">
+					<a class="nav-link btn icon-md p-0" href="<?php echo base_url('profile') ?>" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+						<img class="avatar-img rounded-2" src="<?= $userData[0]['image'] ?>" alt="">
 					</a>
 					<ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
 						<!-- Profile info -->
@@ -246,14 +246,14 @@
 							<div class="d-flex align-items-center position-relative">
 								<!-- Avatar -->
 								<div class="avatar me-3">
-									<img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt="avatar">
+									<img class="avatar-img rounded-circle" src="<?= $userData[0]['image'] ?>" alt="avatar">
 								</div>
 								<div>
-									<a class="h6 stretched-link" href="#"><?= $this->session->userdata('name') ?> </a>
+									<a class="h6 stretched-link" href="<?php echo base_url('profile') ?>"><?= $this->session->userdata('name') ?></a>
 									<p class="small m-0">Web Developer</p>
 								</div>
 							</div>
-							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="my-profile.html">View profile</a>
+							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="<?php echo base_url('profile') ?>">View profile</a>
 						</li>
 						<!-- Links -->
 						<li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>

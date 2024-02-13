@@ -42,6 +42,7 @@ class Auth extends CI_Controller
 	{
 		if ($this->input->post('email') &&  $this->input->post('password')) {
 			$password = $this->input->post('password');
+			$gender = $this->input->post('gender');
 			$data = array(
 				'first_name' => $this->input->post('firstname'),
 				'surname' => $this->input->post('surname'),
@@ -49,7 +50,8 @@ class Auth extends CI_Controller
 				'password' => $password,
 				'cpassword' => md5($password),
 				'date_of_birth' => $this->input->post('date') . '-' . $this->input->post('month') . '-' . $this->input->post('year'),
-				'gender' => $this->input->post('gender')
+				'gender' => $gender,
+				'image' => 'assets/images/avatar/'.$gender.'.avif'
 			);
 
 			// Calculate age
@@ -64,6 +66,7 @@ class Auth extends CI_Controller
 				$data['error'] = 'Email address already exists';
 				$this->load->view('auth/sign-up', $data);
 			} else {
+				// print_r($data);
 				$this->UserModel->insert_user($data);
 				redirect('sign-in');
 			}

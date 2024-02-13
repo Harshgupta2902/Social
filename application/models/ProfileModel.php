@@ -1,5 +1,5 @@
 <?php
-class HomeModel extends CI_Model
+class ProfileModel extends CI_Model
 {
     public function __construct()
     {
@@ -7,12 +7,7 @@ class HomeModel extends CI_Model
         $this->load->database();
     }
 
-    public function getUserData($user_id){
-        $this->db->where('id', $user_id);
-        return $this->db->get('users')->result_array();
-    }
-
-
+    
     public function getFriend($current_user_id){
         $this->db->order_by('RAND()');
         $this->db->limit(5);
@@ -23,7 +18,7 @@ class HomeModel extends CI_Model
             if ($user['id'] == $current_user_id) {
                 continue;   
             }
-            if (!$this->isUserFollowed($current_user_id, $user['id'])) {    
+            if (!$this->isUserFollowed($current_user_id, $user['id'])) {
                 $finalList[] = $user;
             }
         }
@@ -36,7 +31,7 @@ class HomeModel extends CI_Model
         $this->db->where('follower_id', $user_id_to_check);
         $query = $this->db->get('follow');
         
-        return $query->num_rows() > 0;
+        return $query->num_rows() > 0; // Returns TRUE if user is followed, FALSE otherwise
     }
     
 }

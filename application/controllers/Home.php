@@ -19,8 +19,10 @@ class Home extends CI_Controller {
             
             $current_user_id = $this->session->userdata('userid');
             $follows = $this->FollowModel->get_follows_by_user_id($current_user_id);
-            $data['friends'] = $this->HomeModel->getFriend();            
+            $data['friends'] = $this->HomeModel->getFriend($current_user_id);            
             $data['follows'] = $follows;
+            $data['userData'] = $this->HomeModel->getUserData($current_user_id);            
+
             // echo "<pre>";
             // print_r($follows);
             $this->load->view('home/home', $data);

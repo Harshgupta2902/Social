@@ -63,3 +63,6 @@ $route['logout'] = 'Auth/logout';
 
 $route['home'] = 'Home/index';
 
+
+$route['profile'] = 'Profile/index';
+
