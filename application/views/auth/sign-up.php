@@ -84,7 +84,7 @@
                                 <div class="col-sm-4">
                                     <select required name="year" class="form-control custom-select">
                                         <?php
-                                        $currentYear = date("Y");
+                                        $currentYear = date("Y") - 14;
                                         for ($i = $currentYear; $i >= 1900; $i--) {
                                             echo "<option value=\"$i\">$i</option>";
                                         }

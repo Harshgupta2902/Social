@@ -15,6 +15,8 @@
                 <!-- Date time -->
                 <ul class="list-unstyled mt-3 mb-0">
                 <?php 
+                // print_r($userData[0]['date_of_birth']);
+
                     // Assuming $user is the array containing user data
                     $dateOfBirth = DateTime::createFromFormat('d-m-Y', $userData[0]['date_of_birth']);
                     $formattedDateOfBirth = $dateOfBirth->format('F j, Y');

@@ -3,20 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
-	public function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
-		$this->load->library('session');
-		$this->load->model('HomeModel');
-		$this->load->model('FollowModel');
-		$this->load->model('NotificationModel');
-        // $this->load->controller('Notification');
+        $this->load->library('session');
+        $this->load->model('HomeModel');
+        $this->load->model('FollowModel');
+        $this->load->model('NotificationModel');
 
     }
 
 
-	public function index(){
+    public function index(){
         if ($this->session->userdata('logged_in') == true || !empty($this->session->userdata('name'))) {
             
             $current_user_id = $this->session->userdata('userid');
@@ -32,7 +31,7 @@ class Home extends CI_Controller {
         } else {
             redirect('sign-in');
         }		
-	}
+    }
 
     public function fetch_follow_data(){
         $current_user_id = $this->session->userdata('userid');
@@ -87,7 +86,7 @@ class Home extends CI_Controller {
         $this->NotificationModel->send($follower_id, $message, $image, $type, $approved_message, 1);
         // Debugging: Check if the update query executed successfully
         if ($this->db->affected_rows() > 0) {
-           
+        
             echo "Follow status updated successfully.";
         } else {
             echo "Follow status update failed.";
@@ -116,39 +115,5 @@ class Home extends CI_Controller {
         echo $this->db->last_query();
 
     }
-
-
 }
-
-
-
-
-
-// public function update_follow_status($follower_id, $notification_id) {
-//     $current_user_id = $this->session->userdata('userid');
-
-//     $data = array(
-//         'status' => 1
-//     );
-    
-//     $this->db->where('user_id', $follower_id);
-//     $this->db->where('follower_id', $current_user_id);
-//     $this->db->update('follow', $data);
-
-//     $this->db->where('id', $notification_id);
-//     $this->db->update('notification', $data);
-
-//     if ($this->db->affected_rows() > 0) {
-//         $followerData = $this->HomeModel->getUserData($follower_id);            
-
-//         $message = '';
-//         $image = $followerData[0]['image'];          
-//         $type = 'Follow';
-//         $approved_message = $followerData[0]['first_name'] . ' ' . $followerData[0]['surname'] . ' accepted your follow request.';
-//         $this->NotificationModel->send($follow_id, $message, $image, $type, $approved_message, 1);
-//         echo "Follow status updated successfully.";
-//     } else {
-//         echo "Follow status update failed.";
-//     }
-//     echo $this->db->last_query();
-// }
+?>

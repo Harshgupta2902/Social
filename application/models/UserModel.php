@@ -27,6 +27,26 @@ class UserModel extends CI_Model
     }
 
     
+    public function generate_unique_username($first_name, $surname) {
+        $username = strtolower($first_name . ' '. $surname);
+        $username .= rand(0100, 9999);
+        $username = str_replace(' ', '_', $username);
+
+        $this->db->where('username', $username);
+        $query = $this->db->get('users');
+
+        while ($query->num_rows() > 0) {
+            $username = strtolower($first_name . ' '. $surname);
+            $username .= rand(100, 999);
+            $username = str_replace(' ', '_', $username);
+
+            $this->db->where('username', $username);
+            $query = $this->db->get('users');
+        }
+
+        return $username;
+    }
+
 }
 ?>
 

@@ -39,7 +39,30 @@
                 </div>
                 <!-- Button -->
                 <div class="d-flex mt-3 justify-content-center ms-sm-auto">
-                  <button class="btn btn-danger-soft me-2" type="button"> <i class="bi bi-pencil-fill pe-1"></i> Edit profile </button>
+                  <?php if($this->session->userdata('name') == $userData[0]['first_name'] . ' '. $userData[0]['surname'] ): ?>
+                    <button class="btn btn-danger-soft me-2" type="button"> <i class="bi bi-pencil-fill pe-1"></i> Edit profile </button>
+                  <?php else: ?>
+                    <button class="btn btn-primary-soft me-2" onclick="followUser(<?= $userData[0]['id'] ?>)" type="button"> <i class="bi bi-plus-lg"></i> Add Friend </button>
+                    <script>
+                       function followUser(userId) {
+                           // Send an AJAX request to the URL
+                           $.ajax({
+                                 url: "<?= base_url('Home/follow/') ?>" + userId,
+                                 type: "GET",
+                                 success: function(response) {
+                                    // Change the icon to fa-check
+                                    $("a[href='#'][onclick='followUser(" + userId + ")'] i").removeClass("fa-solid fa-plus").addClass("fa-solid fa-check");
+                                    location.reload();
+
+                                 },
+                                 error: function(xhr, status, error) {
+                                    // Handle error response, if needed
+                                    console.error("Request failed");
+                                 }
+                           });
+                        }
+                    </script>
+                  <?php endif; ?>
                   <div class="dropdown">
                     <!-- Card share action menu -->
                     <button class="icon-md btn btn-light" type="button" id="profileAction2" data-bs-toggle="dropdown" aria-expanded="false">

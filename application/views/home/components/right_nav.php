@@ -27,7 +27,7 @@
                   <div class="hstack gap-2 mb-3">
                      <!-- Avatar -->
                      <div class="avatar">
-                        <a href="#!"><img class="avatar-img rounded-circle" src="<?= $friends['image']  ?>" alt=""></a>
+                        <a href="<?= site_url('profile?username='.$friends['username']  ) ?>"><img class="avatar-img rounded-circle" src="<?= $friends['image']  ?>" alt=""></a>
                      </div>
                      <!-- Title -->
                      <div class="overflow-hidden">
@@ -54,7 +54,7 @@
                                  success: function(response) {
                                     // Change the icon to fa-check
                                     $("a[href='#'][onclick='followUser(" + userId + ")'] i").removeClass("fa-solid fa-plus").addClass("fa-solid fa-check");
-                                    window.location.reload();
+                                    location.reload();
 
                                  },
                                  error: function(xhr, status, error) {

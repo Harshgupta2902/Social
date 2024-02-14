@@ -34,5 +34,10 @@ class ProfileModel extends CI_Model
         return $query->num_rows() > 0; // Returns TRUE if user is followed, FALSE otherwise
     }
     
+
+    public function getUserData($username){
+        $this->db->where('username', $username);
+        return $this->db->get('users')->result_array();
+    }
 }
 ?>

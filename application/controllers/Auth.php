@@ -43,15 +43,20 @@ class Auth extends CI_Controller
 		if ($this->input->post('email') &&  $this->input->post('password')) {
 			$password = $this->input->post('password');
 			$gender = $this->input->post('gender');
+			$first_name = $this->input->post('firstname');
+			$surname = $this->input->post('surname');
+			$username = $this->UserModel->generate_unique_username($first_name, $surname);
+			print_r($username);
 			$data = array(
-				'first_name' => $this->input->post('firstname'),
-				'surname' => $this->input->post('surname'),
+				'first_name' => $first_name,
+				'surname' => $surname,
 				'email' => $this->input->post('email'),
 				'password' => $password,
 				'cpassword' => md5($password),
 				'date_of_birth' => $this->input->post('date') . '-' . $this->input->post('month') . '-' . $this->input->post('year'),
 				'gender' => $gender,
-				'image' => 'assets/images/avatar/'.$gender.'.avif'
+				'image' => 'assets/images/avatar/'.$gender.'.avif',
+				'username' => $username
 			);
 
 			// Calculate age
