@@ -156,81 +156,172 @@
 				</li>
 				<li class="nav-item dropdown ms-2">
 					<a class="nav-link bg-light icon-md btn btn-light p-0" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-						<span class="badge-notif animation-blink"></span>
+						<!-- <span class="badge-notif animation-blink"></span> -->
 						<i class="bi bi-bell-fill fs-6"> </i>
 					</a>
 					<div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0" aria-labelledby="notifDropdown">
 						<div class="card">
-							<div class="card-header d-flex justify-content-between align-items-center">
-								<h6 class="m-0">Notifications <span class="badge bg-danger bg-opacity-10 text-danger ms-2">4 new</span></h6>
-								<a class="small" href="#">Clear all</a>
+
+						<?php if (empty($notifications)): ?>
+							<div class="card-header d-flex justify-content-center align-items-center">
+								<h6 class="m-0">No New Notifications</h6>
+								<!-- <a class="small" href="#">Clear all</a> -->
 							</div>
+						<?php endif; ?>
+						<?php if (count($notifications) > 1): ?>
+							<div class="card-header d-flex justify-content-between align-items-center">
+								<h6 class="m-0">Notifications <span class="badge bg-danger bg-opacity-10 text-danger ms-2"><?= count($notifications) ?> new</span></h6>
+								<!-- <a class="small" href="#">Clear all</a> -->
+							</div>
+						<?php endif; ?>
+
+
 							<div class="card-body p-0">
 								<ul class="list-group list-group-flush list-unstyled p-2">
-									<!-- Notif item -->
-									<li>
-										<div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
-											<div class="avatar text-center d-none d-sm-inline-block">
-												<img class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg" alt="">
-											</div>
-											<div class="ms-sm-3">
-												<div class=" d-flex">
-												<p class="small mb-2"><b>Judy Nguyen</b> sent you a friend request.</p>
-												<p class="small ms-3 text-nowrap">Just now</p>
-											</div>
-											<div class="d-flex">
-												<button class="btn btn-sm py-1 btn-primary me-2">Accept </button>
-												<button class="btn btn-sm py-1 btn-danger-soft">Delete </button>
-											</div>
-										</div>
-									</div>
-									</li>
-									<!-- Notif item -->
-									<li>
-										<div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
-											<div class="avatar text-center d-none d-sm-inline-block">
-												<img class="avatar-img rounded-circle" src="assets/images/avatar/02.jpg" alt="">
-											</div>
-											<div class="ms-sm-3 d-flex">
-												<div>
-													<p class="small mb-2">Wish <b>Amanda Reed</b> a happy birthday (Nov 12)</p>
-													<button class="btn btn-sm btn-outline-light py-1 me-2">Say happy birthday 🎂</button>
+								<?php foreach ($notifications as $notification): ?>
+									<?php if ($notification['type'] === 'Follow'): ?>
+										<li>
+										<?php if ($notification['status'] == 1): ?>
+											<a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
+												<div class="avatar text-center d-none d-sm-inline-block">
+													<img class="avatar-img rounded-circle" src="<?= $notification['image'] ?>" alt="">
 												</div>
-												<p class="small ms-3">2min</p>
-											</div>
-										</div>
-									</li>
-									<!-- Notif item -->
-									<li>
-										<a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
-											<div class="avatar text-center d-none d-sm-inline-block">
-												<div class="avatar-img rounded-circle bg-success"><span class="text-white position-absolute top-50 start-50 translate-middle fw-bold">WB</span></div>
-											</div>
-											<div class="ms-sm-3">
-												<div class="d-flex">
-													<p class="small mb-2">Webestica has 15 like and 1 new activity</p>
-													<p class="small ms-3">1hr</p>
+												<div class="ms-sm-3">
+													<div class="d-flex">
+														<p class="small mb-2"><?= $notification['approved_message'] ?></p>
+														<p class="small ms-3"><?= time_ago($notification['timestamp'])  ?></p>
+													</div>
+												</div>
+											</a>
+										<?php else: ?>
+											<div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
+												<div class="avatar text-center d-none d-sm-inline-block">
+													<img class="avatar-img rounded-circle" src="<?= $notification['image'] ?>" alt="">
+												</div>
+												<div class="ms-sm-3">
+													<div class=" d-flex">
+														<p class="small mb-2"><b><?= $notification['message'] ?></b></p>
+														<p class="small ms-3 text-nowrap"><?= time_ago($notification['timestamp'])  ?></p>
+													</div>
+													<div class="d-flex">
+													<button onclick="updateFollowStatus(<?php echo $notification['sender_id']; ?>, <?= $notification['id'] ?>)"  class="btn btn-sm py-1 btn-primary me-2">Accept</button>
+														<button onclick="deleteRequest(<?php echo $notification['sender_id']; ?>, <?= $notification['id'] ?>)" class="btn btn-sm py-1 btn-danger-soft">Delete</button>
+													</div>
+
+
+													<script>
+														function updateFollowStatus(followerId,notification_id) {
+															
+															$.ajax({
+																type: 'GET',
+																url: 'Home/update_follow_status/'+followerId + '/'+notification_id,
+																success: function(response) {
+																	// Handle success response
+																	console.log('Follow status updated successfully.');
+																	location.reload();
+																},
+																error: function(xhr, status, error) {
+																	// Handle error response
+																	console.error('Error updating follow status:', error);
+																}
+															});
+														}
+
+														function deleteRequest(followerId,notification_id) {
+															
+															$.ajax({
+																type: 'GET',
+																url: 'Home/deleteRequest/'+followerId + '/'+notification_id,
+																success: function(response) {
+																	// Handle success response
+																	console.log('Follow status updated successfully.');
+																	location.reload();
+																},
+																error: function(xhr, status, error) {
+																	// Handle error response
+																	console.error('Error updating follow status:', error);
+																}
+															});
+														}
+													</script>
 												</div>
 											</div>
-										</a>
-									</li>
-									<!-- Notif item -->
-									<li>
-										<a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1">
-											<div class="avatar text-center d-none d-sm-inline-block">
-												<img class="avatar-img rounded-circle" src="assets/images/logo/12.svg" alt="">
+										<?php endif; ?>
+
+												
+										</li>
+									<?php elseif ($notification['type'] === 'Birthday'): ?>
+										<li>
+											<div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
+												<div class="avatar text-center d-none d-sm-inline-block">
+													<img class="avatar-img rounded-circle" src="<?= $notification['image'] ?>" alt="">
+												</div>
+												<div class="ms-sm-3 d-flex">
+													<div>
+														<p class="small mb-2">Wish <b><?= $notification['sender_name'] ?></b> a happy birthday (<?= date('M d', strtotime($notification['timestamp'])) ?>)</p>
+														<button class="btn btn-sm btn-outline-light py-1 me-2">Say happy birthday 🎂</button>
+													</div>
+													<p class="small ms-3"><?= time_ago($notification['timestamp'])  ?></p>
+												</div>
 											</div>
-											<div class="ms-sm-3 d-flex">
-												<p class="small mb-2"><b>Bootstrap in the news:</b> The search giant’s parent company, Alphabet, just joined an exclusive club of tech stocks.</p>
-												<p class="small ms-3">4hr</p>
-											</div>
-										</a>
-									</li>
+										</li>
+									<?php elseif ($notification['type'] === 'View'): ?>
+										<li>
+											<a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
+												<div class="avatar text-center d-none d-sm-inline-block">
+													<div class="avatar-img rounded-circle bg-success"><span class="text-white position-absolute top-50 start-50 translate-middle fw-bold">WB</span></div>
+												</div>
+												<div class="ms-sm-3">
+													<div class="d-flex">
+														<p class="small mb-2"><?= $notification['message'] ?></p>
+														<p class="small ms-3"><?= time_ago($notification['timestamp'])  ?></p>
+													</div>
+												</div>
+											</a>
+										</li>
+									<?php endif; ?>
+								<?php endforeach; ?>
+
+								<?php
+									// Function to calculate time difference in a human-readable format
+									function time_ago($timestamp) {
+										$current_time = time();
+										$notification_time = strtotime($timestamp);
+										$time_diff = $current_time - $notification_time;
+
+										$intervals = array(
+											1             => 'second',
+											60            => 'minute',
+											3600          => 'hour',
+											86400         => 'day',
+											604800        => 'week',
+											2592000       => 'month',
+											31536000      => 'year'
+										);
+
+										foreach ($intervals as $seconds => $label) {
+											$divider = $time_diff / $seconds;
+											if ($divider >= 1) {
+												$time_diff = round($divider);
+												if ($time_diff > 1) {
+													$label .= 's';
+												}
+												return $time_diff . ' ' . $label . ' ago';
+											}
+										}
+									
+										// If the loop completes without returning, return a default value
+										return 'Just now'; // Or any default message you prefer
+									}
+								?>
 								</ul>
 							</div>
-							<div class="card-footer text-center">
-								<a href="#" class="btn btn-sm btn-primary-soft">See all incoming activity</a>
-							</div>
+
+							<?php if (count($notifications) > 4): ?>
+								<div class="card-footer text-center">
+									<a href="#" class="btn btn-sm btn-primary-soft">See all incoming activity</a>
+								</div>
+							<?php endif; ?>
 						</div>
 					</div>
 				</li>

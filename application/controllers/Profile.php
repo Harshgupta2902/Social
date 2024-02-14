@@ -11,6 +11,7 @@ class Profile extends CI_Controller {
 		$this->load->model('HomeModel');
 		$this->load->model('FollowModel');
 		$this->load->model('ProfileModel');
+		$this->load->model('NotificationModel');
 
     }
 
@@ -22,7 +23,9 @@ class Profile extends CI_Controller {
             $data['followersCount'] = $this->FollowModel->getFollowersCount($current_user_id);
             $data['friends'] = $this->HomeModel->getFriend($current_user_id);            
             $data['userData'] = $this->HomeModel->getUserData($current_user_id);            
-            $data['followersList'] = $this->FollowModel->getFollowersList($current_user_id);            
+            $data['followersList'] = $this->FollowModel->getFollowersList($current_user_id);    
+            $data['notifications'] = $this->NotificationModel->getNotifications();            
+        
             // echo "<pre>";
             // print_r($data['followersCount']);
             $this->load->view('profile/profile' ,$data);
